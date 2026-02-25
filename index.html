@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Bestie 💖</title>
+
+<style>
+
+/* ===== Animated Gradient Background ===== */
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+color:white;
+overflow:hidden;
+background:linear-gradient(-45deg,#ff758c,#ff7eb3,#ffb199,#ff6a88);
+background-size:400% 400%;
+animation:gradientBG 10s ease infinite;
+}
+
+@keyframes gradientBG{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* ===== Section Layout ===== */
+.section{
+position:absolute;
+width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+opacity:0;
+transition:1s;
+}
+
+.active{opacity:1;}
+
+/* ===== Glass Card ===== */
+.card{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(20px);
+padding:35px;
+border-radius:25px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+max-width:550px;
+}
+
+/* ===== Button ===== */
+button{
+margin-top:25px;
+padding:12px 30px;
+border:none;
+border-radius:30px;
+font-size:16px;
+background:white;
+color:#ff4b7d;
+cursor:pointer;
+transition:0.3s;
+}
+button:hover{transform:scale(1.1);}
+
+/* ===== Gallery ===== */
+.gallery{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-top:20px;
+}
+.gallery img{
+width:100%;
+border-radius:20px;
+transition:0.4s;
+}
+.gallery img:hover{transform:scale(1.08);}
+
+/* ===== Floating Hearts ===== */
+.heart{
+position:absolute;
+bottom:-20px;
+font-size:22px;
+animation:float 6s linear infinite;
+}
+@keyframes float{
+0%{transform:translateY(0);}
+100%{transform:translateY(-110vh);}
+}
+
+/* ===== Music Button ===== */
+.music-btn{
+position:fixed;
+top:15px;
+right:15px;
+background:white;
+color:#ff4b7d;
+padding:8px 15px;
+border-radius:20px;
+cursor:pointer;
+font-size:14px;
+}
+
+/* ===== Countdown ===== */
+#countdown{
+font-size:18px;
+margin-top:10px;
+}
+
+/* ===== Confetti Canvas ===== */
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="bgmusic" autoplay loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-btn" onclick="toggleMusic()">🎵 Music</div>
+<canvas id="confetti"></canvas>
+
+<!-- Sections -->
+
+<div id="s1" class="section active">
+<div class="card">
+<h1 id="typing"></h1>
+<div id="countdown"></div>
+<button onclick="next()">Start ➜</button>
+</div>
+</div>
+
+<div id="s2" class="section">
+<div class="card">
+<h1>It's 2 March 🎂</h1>
+<p>The most special day of the year ✨</p>
+<button onclick="next()">Next ➜</button>
+</div>
+</div>
+
+<div id="s3" class="section">
+<div class="card">
+<h1>You Are My Safe Place 🥹</h1>
+<p>My comfort, my happiness, my forever support 💕</p>
+<button onclick="next()">Next ➜</button>
+</div>
+</div>
+
+<div id="s4" class="section">
+<div class="card">
+<h1>Our Memories 📸</h1>
+<div class="gallery">
+<img src="photo1.jpg">
+<img src="photo2.jpg">
+<img src="photo3.jpg">
+<img src="photo4.jpg">
+</div>
+<button onclick="next()">Next ➜</button>
+</div>
+</div>
+
+<div id="s5" class="section">
+<div class="card">
+<h1>HAPPY BIRTHDAY 🎉💖</h1>
+<p>You are my forever best friend 🥹</p>
+<button onclick="blast()">Celebrate 🎊</button>
+</div>
+</div>
+
+<!-- Floating Hearts -->
+<div class="heart" style="left:10%">💖</div>
+<div class="heart" style="left:30%;animation-delay:2s;">💕</div>
+<div class="heart" style="left:60%;animation-delay:4s;">💗</div>
+<div class="heart" style="left:80%;animation-delay:1s;">💓</div>
+
+<script>
+
+/* ===== Section Navigation ===== */
+let current=1;
+function next(){
+document.getElementById("s"+current).classList.remove("active");
+current++;
+document.getElementById("s"+current).classList.add("active");
+}
+
+/* ===== Music Toggle ===== */
+function toggleMusic(){
+let music=document.getElementById("bgmusic");
+music.paused?music.play():music.pause();
+}
+
+/* ===== Typing Effect ===== */
+let text="Hey My Favorite Human 💖";
+let i=0;
+function type(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,80);
+}
+}
+type();
+
+/* ===== Countdown ===== */
+let target=new Date("March 2, 2026 00:00:00").getTime();
+setInterval(function(){
+let now=new Date().getTime();
+let diff=target-now;
+let days=Math.floor(diff/(1000*60*60*24));
+document.getElementById("countdown").innerHTML="Birthday Countdown: "+days+" days left 🎉";
+},1000);
+
+/* ===== Confetti Blast ===== */
+function blast(){
+let canvas=document.getElementById("confetti");
+let ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+for(let i=0;i<150;i++){
+ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
+ctx.fillRect(Math.random()*canvas.width,Math.random()*canvas.height,5,5);
+}
+}
+
+</script>
+
+</body>
+</html>
